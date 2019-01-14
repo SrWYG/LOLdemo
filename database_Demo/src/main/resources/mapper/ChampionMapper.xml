@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mvcDemo.mapper.ChampionMapper">
+	<resultMap type="mvcDemo.bean.Champion" id="ChampionMap">
+		<id property="championId" column="championid"/>
+		<result property="name" column="name"/>
+		<result property="nickname" column="nickname"/>
+		<result property="chineseName" column="chinesename"/>
+		<result property="avatar" column="avatar"/>
+	</resultMap>
+
+	<resultMap type="java.util.Map" id="heroDetailMap">
+		<!--<result property="nickname" column="nickname"/>-->
+		<!--<result property="name" column="name"/>-->
+		<result property="version" column="version"/>
+		<result property="a_num" column="a_num"/>
+		<result property="v_num" column="v_num"/>
+		<result property="k_sum" column="k_sum"/>
+		<result property="d_sum" column="d_sum"/>
+		<result property="a_sum" column="a_sum"/>
+
+	</resultMap>
+
+	<resultMap type="java.util.Map" id="ChampionCountMap">
+		<result property="nickname" column="nickname"/>
+		<result property="name" column="name"/>
+		<result property="count" column="num"/>
+		<result property="v_num" column="v_num"/>
+	</resultMap>
+
+    
+    <insert id="insertChampion" parameterType="mvcDemo.bean.Champion" >
+        insert into champion
+        (championid , name)
+        values(#{championId} , #{name})
+    </insert>
+    
+    <delete id="deleteChampion" parameterType="mvcDemo.bean.Champion">
+    	delete from champion
+    	where championid=#{championId}
+    </delete>
+	
+	<update id="updateChampion" parameterType="mvcDemo.bean.Champion">
+		update champion set
+		name = #{name},
+		nickname = #{nickname},
+		chinesename = #{chineseName},
+		avatar = #{avatar}
+		where championid = #{championId}
+	</update>
+	
+	<select id="selectChampion" parameterType="mvcDemo.bean.Champion" resultMap="ChampionMap">
+		select * from champion
+		where championid = #{championId}
+	</select>
+	
+	<select id="selectChampionNumber" resultType="java.lang.Integer">
+		select count(*) from champion
+	</select>
+
+	<select id="countAllChampionGroup" resultMap="ChampionCountMap">
+		SELECT `champion`.nickname as nickname,`champion`.chinesename as name,COUNT(*) as num,sum(`team`.iswinner=1) as v_num
+		FROM `player_team`
+				 LEFT JOIN `champion` on `player_team`.championid=`champion`.championid
+				 LEFT JOIN `team` on `player_team`.teamid=`team`.teamid
+				 LEFT JOIN `matches` on `team`.matchid=`matches`.matchid
+		<if test="version!=null and version !='' ">
+			WHERE `matches`.version = #{version}
+		</if>
+		GROUP BY `champion`.championid;
+	</select>
+
+	<select id="countAllChampionGroupByView" resultMap="ChampionCountMap">
+		SELECT nickname,chinesename as name,COUNT(*) as num,sum(iswinner=1) as v_num
+		FROM `view_all_match_hero_version`
+		<if test="version!=null and version !='' ">
+			WHERE version = #{version}
+		</if>
+		GROUP BY championid;
+	</select>
+
+
+	<select id="countMatches" resultType="java.lang.Integer">
+		select count(*)
+		from `matches`
+		where version=#{0}
+	</select>
+
+	<select id="heroDetail" resultMap="heroDetailMap">
+		SELECT `matches`.version as version,COUNT(*) as a_num,sum(`team`.iswinner=1) as v_num,
+		       sum(`player_team`.kills) as k_sum,sum(`player_team`.deaths) as d_sum,sum(`player_team`.assists) as a_sum
+		FROM `player_team`
+		LEFT JOIN `champion` on `player_team`.championid=`champion`.championid
+		LEFT JOIN `team` on `player_team`.teamid=`team`.teamid
+		LEFT JOIN `matches` on `team`.matchid=`matches`.matchid
+		WHERE `champion`.chinesename = #{heroName}
+		GROUP BY `matches`.version;
+	</select>
+</mapper>

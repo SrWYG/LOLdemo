@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mvcDemo.mapper.PlayerTeamMapper">
+
+    <insert id="insertPlayerTeam" parameterType="mvcDemo.bean.PlayerTeam" useGeneratedKeys="true" keyProperty="id">
+      insert into player_team
+      (playerid,teamid,championid,firstplayerskill,secondplayerskill,role,kills,deaths,assists,largestkillingspree,largestmultikill,longesttimespentliving,doublekills,triplekills,quadrakills,pentalkills,
+      totaldamagedealt,magicdamagedealt,physicaldamagedealt,truthdamagedealt,totalheal,visionscore,totaldamagetaken,magicdamagetaken,physicaldamagetaken,truthdamagetaken,goldearned,goldspent,totalminionskill,isfirstblood)
+      value
+      (#{playerId},#{teamId},#{championId},#{firstPlayerSkill},#{secondPlayerSkill},#{role},#{kills},#{deaths},#{assist},#{largestKillingSpree},#{largestMultiKill},#{longestTimeSpentLiving},#{doubleKills},#{tripleKills},#{quadraKills},#{pentalKills},
+      #{totalDamageDealt},#{magicDamageDealt},#{physicalDamageDealt},#{truthDamageDealt},#{totalHeal},#{visionScore},#{totalDamageTaken},#{magicDamageTaken},#{physicalDamageTaken},#{truthDamageTaken},#{goldEarned},#{goldSpent},#{totalMinionsKills},#{isFirstBlood})
+    </insert>
+
+</mapper>

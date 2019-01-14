@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mvcDemo.mapper.PlayerMapper">
+	<resultMap type="mvcDemo.bean.Player" id="PlayerMap">
+		
+	</resultMap>
+
+    <insert id="insertPlayer" parameterType="mvcDemo.bean.Player" useGeneratedKeys="true" keyProperty="id">
+       insert into player(playerid)values(#{playerId})
+    </insert>
+
+	<update id="updatePlayer" parameterType="mvcDemo.bean.Player">
+		update player set
+		nickname=#{nickname}
+	</update>
+	
+	<delete id="deletePlayer" parameterType="mvcDemo.bean.Player">
+		delete from player 
+		where playerid=#{playerId}
+	</delete>
+	
+	<select id="selectPlayer" parameterType="mvcDemo.bean.Player" resultMap="PlayerMap">
+		select * from player
+		where playerid=#{playerId}
+	</select>
+</mapper>

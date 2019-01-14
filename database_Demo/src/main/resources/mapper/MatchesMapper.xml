@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mvcDemo.mapper.MatchesMapper">
+	<resultMap id="MatchesMap" type="mvcDemo.bean.Matches">
+		<id property="matchId" column="matchid"/>
+		<result property="platform" column="platform"/>
+		<result property="duration" column="duration"/>
+		<result property="creationTime" column="creationtime"/>
+		<result property="version" column="version"/>
+	</resultMap>
+
+    <insert id="insertMatches" parameterType="mvcDemo.bean.Matches" >
+        insert into matches
+        (matchid , platform,duration,creationtime,version)
+        values(#{matchId} , #{platform},#{duration},#{creationTime},#{version})
+    </insert>
+
+	<update id="updateMatches" parameterType="mvcDemo.bean.Matches">
+		update matches set 
+		platform=#{platform},
+		duration=#{duration},
+		creationtime=#{creationTime},
+		version=#{version}
+		where matchid = #{matchId}
+	</update>
+
+	<delete id="deleteMatches" parameterType="mvcDemo.bean.Matches">
+		delete from matches
+		where matchid=#{matchId}
+	</delete>
+	
+	<select id="selectMatches" parameterType="mvcDemo.bean.Matches" resultMap="MatchesMap">
+		select * from matches
+		where matchid=#{matchId}
+	</select>
+	
+    <select id="selectMatchesNumber" resultType="java.lang.Integer" >
+        select count(*) from matches
+    </select>
+
+</mapper>

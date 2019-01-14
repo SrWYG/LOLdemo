@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+		<meta charset="utf-8">
+		<title>Pure CSS3 Menu</title>
+		<link href="../../css/style.css" media="screen" rel="stylesheet" type="text/css" />
+		<link href="../../css/iconic.css" media="screen" rel="stylesheet" type="text/css" />
+		<link href="../../css/bootstrap.css" rel="stylesheet" type="text/css" />
+		<link href="../../css/bootstrap-table.css" rel="stylesheet" type="text/css" />
+		<script src="../../js/jquery-3.3.1.min.js"></script>
+		<script src="../../js/prefix-free.js"></script>
+		<script src="../../js/bootstrap.min.js"></script>
+		<script src="../../js/bootstrap-table.js"></script>
+	</head>
+
+<body>
+	<div class="wrap">
+	
+	<nav>
+		<ul class="menu">
+			<li><a href="#"><span class="iconic magnifying-glass"></span> 赛季</a>
+				<ul style="z-index: 9999">
+					<li ><a href="#">2014</a></li>
+					<li><a href="#">2015</a></li>
+					<li><a href="#">2016</a></li>
+					<li><a href="#">2017</a></li>
+
+				</ul>
+			</li>
+		</ul>
+		<div class="clearfix"></div>
+	</nav>
+		<div style="position:relative; top:20px ;background-color:#6c757d">
+			<div>
+				<span>本次查询耗时：</span><text>0.1s</text>
+				<span>视图查询耗时：</span><text>0.1s</text>
+			</div>
+			<table  class="table bootstrap-table" id="list_hero" data-pagination="true" data-side-pagination="client" data-page-size="6" >
+
+			</table>
+			<button type="button" class="btn btn-primary">reload by view</button>
+
+		</div>
+
+	</div>
+
+
+
+</body>
+	<script src="../../js/data_controller.js"></script>
+</html>
